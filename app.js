@@ -26,14 +26,6 @@ function addTodo(){
         newChecked.classList.add("checked");
 
         newTodoItem.classList.add("todoItem")
-        // if(checked === true)
-        // {
-        //     newChecked.style.opacity = 1;
-        // }
-        // else
-        // {
-        //     newChecked.style.opacity = 0;
-        // }
 
         document.getElementById("listOfTodos").append(newTodoItem);
 
@@ -162,7 +154,7 @@ function addTodo(){
         document.getElementById("submitTodo").style.display = "flex";
         document.getElementById("editTodo").style.display = "none";
         document.getElementById("addTodoInput").style.display = "flex";
-        item.getElementsByClassName("editTodo")[0].style.backgroundColor = "white";
+        item.getElementsByClassName("editTodo")[0].style.backgroundColor = "#B7B7A4";
         console.log("closing edit screen")
 
         
