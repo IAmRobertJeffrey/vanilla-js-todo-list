@@ -1,2 +1,2 @@
-# vanilla-js-todo-list
+# Vanilla JS Todo List
 a todo list made with vanilla js
