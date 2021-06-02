@@ -1,4 +1,53 @@
+function sizeCheck() {
+    let todos = document.querySelectorAll(".todoItem")
+
+    todos.forEach(currentTodo =>
+    {
+        if (window.matchMedia("(max-width: 600px)").matches)
+        {
+            currentTodo.classList.add("smallScreen")
+            if(currentTodo.childNodes[0].style.opacity === "1")
+            {
+                currentTodo.childNodes[0].style.height = "50px";
+            }
+            else
+            {
+                currentTodo.childNodes[0].style.height = "0px";
+            }
+        } else
+        {
+            currentTodo.classList.remove("smallScreen")
+            currentTodo.childNodes[0].style.height = "";
+        }
+
+    })
+}
+    let query = window.matchMedia('(max-width: 600px)')
+    query.addListener(sizeCheck);
+    window.onload = sizeCheck
+
+
+let keysExistingOnLoad = Object.keys(localStorage).sort();
+
+if(keysExistingOnLoad.length === 0)
+{
+
+    let newTodo = {
+        id: 0,
+        text: "This is an example todo, created because your local storage has no todos in it. Feel free to delete me, edit me, or make a new todo!",
+        checked: false
+    }
+
+    localStorage.setItem("0", JSON.stringify(newTodo))
+}
+
 let currentID = getLastID();
+
+function placeInitialTodos()
+{
+    console.log("hi there's nothing here")
+}
+
 
 function getLastID(){
     let keys = Object.keys(localStorage).sort()
@@ -18,7 +67,7 @@ function reProvidekeys()
     {
         let keys = Object.keys(localStorage).sort()
         keys.forEach(key => {
-            this.key.id = id;
+            key.id = id;
             id++;
         })
 
@@ -63,6 +112,7 @@ function populateTodosFromStorage()
     keys.forEach(key => {
         console.log(JSON.parse(localStorage.getItem(key)));
     })
+    sizeCheck()
 }
 
 function createTodo(newTodo, fromStorage)
@@ -105,6 +155,12 @@ function createTodoMarkup(todoObject)
     const newEditButtonImg = document.createElement("img");
     const newDeleteButtonImg = document.createElement("img");
 
+
+
+
+
+
+
     newChecked.classList.add("checked");
     newTodoItem.classList.add("todoItem")
 
@@ -136,10 +192,12 @@ function createTodoMarkup(todoObject)
     if(todoObject.checked === true)
     {
         newChecked.style.opacity = "1";
+        newTodoText.style.textDecorationLine = "line-through";
     }
     else
     {
         newChecked.style.opacity = "0";
+        newTodoText.style.textDecorationLine = "none";
     }
     return newTodoItem;
 }
@@ -170,12 +228,30 @@ function createTodoEventListeners(newTodoItem, todoObject)
         if(todoObject.checked === true)
         {
             newTodoChecked.style.opacity = "0";
+            let fml = document.querySelectorAll(".todoItem");
+            if(fml[0].classList.contains("smallScreen"))
+            {
+                newTodoChecked.style.height = "0px";
+            }
+            else
+            {
+                newTodoChecked.style.height = "";
+            }
+            newTodoText.style.textDecorationLine = "none";
             todoObject.checked = false;
             localStorage.setItem(todoObject.id, JSON.stringify(todoObject))
         }
         else
         {
             newTodoChecked.style.opacity = "1";
+
+            let fml = document.querySelectorAll(".todoItem");
+            if(fml[0].classList.contains("smallScreen"))
+            {
+                newTodoChecked.style.height = "50px";
+            }
+
+            newTodoText.style.textDecorationLine = "line-through";
             todoObject.checked = true;
             localStorage.setItem(todoObject.id, JSON.stringify(todoObject))
         }
