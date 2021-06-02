@@ -34,7 +34,7 @@ if(keysExistingOnLoad.length === 0)
 
     let newTodo = {
         id: 0,
-        text: "This is an example todo, created because your local storage has no todos in it. Feel free to delete me, edit me, or make a new todo!",
+        text: "This is an example todo, created because your local storage has no todos in it. Feel free to delete or edit me using the buttons to the right or tick me by clicking my text. You can make new todos too!",
         checked: false
     }
 
