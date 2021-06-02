@@ -60,28 +60,41 @@ function getLastID(){
     return newKey;
 }
 
-function reProvidekeys()
-{
-    let id = 0;
-    if(Object.keys(localStorage).length > 0)
-    {
-        let keys = Object.keys(localStorage).sort()
-        keys.forEach(key => {
-            key.id = id;
-            id++;
-        })
-
-    }
-    else
-    {
-        return 0;
-    }
-
-}
+//Will one day re-create the key system
+// function reProvidekeys()
+// {
+//     let id = 0;
+//     if(Object.keys(localStorage).length > 0)
+//     {
+//         let keys = Object.keys(localStorage).sort()
+//         keys.forEach(key => {
+//             key.id = id;
+//             id++;
+//         })
+//
+//     }
+//     else
+//     {
+//         return 0;
+//     }
+//
+// }
 
 populateTodosFromStorage();
 
+document.addEventListener("keyup", function(event) {
+    if (event.code === 'Enter') {
+        submitTodo()
+    }
+});
+
+
 document.getElementById("submitTodo").addEventListener("click", () =>
+{
+    submitTodo()
+});
+
+function submitTodo()
 {
     if(getTextFromAddBox() !== "")
     {
@@ -94,7 +107,7 @@ document.getElementById("submitTodo").addEventListener("click", () =>
         createTodo(newTodo, false);
         populateTodosFromStorage();
     }
-});
+}
 
 function populateTodosFromStorage()
 {
