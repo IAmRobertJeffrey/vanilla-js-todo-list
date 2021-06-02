@@ -83,7 +83,7 @@ function getLastID(){
 populateTodosFromStorage();
 
 document.addEventListener("keyup", function(event) {
-    if (event.code === 'Enter') {
+    if (event.code === 'Enter' && document.getElementById("submitTodo").style.display !== "none") {
         submitTodo()
     }
 });
@@ -217,6 +217,9 @@ function createTodoMarkup(todoObject)
 
 function createTodoEventListeners(newTodoItem, todoObject)
 {
+
+
+
     let newTodoChecked = newTodoItem.childNodes[0];
     let newTodoText = newTodoItem.childNodes[1];
     let newEditButton = newTodoItem.childNodes[2].childNodes[0];
@@ -284,8 +287,9 @@ function createTodoEventListeners(newTodoItem, todoObject)
         populateTodosFromStorage()
     }
 
-    function editItem(newTodoItem, todoObject)
+    function editItem(newTodoItem, todoObject, skip)
     {
+        console.log(todoObject)
         let currentlyExistingTodos = document.querySelectorAll(".todoItem")
 
         currentlyExistingTodos.forEach(currentTodo => {
@@ -304,9 +308,21 @@ function createTodoEventListeners(newTodoItem, todoObject)
 
                     document.getElementById("editTodo").addEventListener("click", editEventListener)
 
+                    document.addEventListener("keyup", enterEditCheck)
+
+                    function enterEditCheck(event)
+                    {
+                        if (event.code === 'Enter' && document.getElementById("submitTodo").style.display === "none")
+                        {
+                            editEventListener()
+                        }
+                    };
+
                     function editEventListener()
                     {
+                        document.removeEventListener("keyup", enterEditCheck)
                         document.getElementById("editTodo").removeEventListener("click", editEventListener)
+
                         if(currentTodo.childNodes[2].childNodes[0].classList.contains("inEdit") && document.getElementById("editTodoInput").value.trim() !== "")
                         {
                             todoObject.text = document.getElementById("editTodoInput").value;
