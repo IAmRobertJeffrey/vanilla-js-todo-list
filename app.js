@@ -1,4 +1,5 @@
-function sizeCheck() {
+function sizeCheck()
+{
     let todos = document.querySelectorAll(".todoItem")
 
     todos.forEach(currentTodo =>
@@ -43,12 +44,6 @@ if(keysExistingOnLoad.length === 0)
 
 let currentID = getLastID();
 
-function placeInitialTodos()
-{
-    console.log("hi there's nothing here")
-}
-
-
 function getLastID(){
     let keys = Object.keys(localStorage).sort()
     if(keys[keys.length - 1] == null)
@@ -82,17 +77,17 @@ function getLastID(){
 
 populateTodosFromStorage();
 
-document.addEventListener("keyup", function(event) {
-    if (event.code === 'Enter' && document.getElementById("submitTodo").style.display !== "none") {
+document.addEventListener("keydown", enterKeyCheck)
+function enterKeyCheck()
+{
+    if (event.code === 'Enter' && document.getElementById("submitTodo").style.display !== "none")
+    {
         submitTodo()
     }
-});
+}
 
 
-document.getElementById("submitTodo").addEventListener("click", () =>
-{
-    submitTodo()
-});
+document.getElementById("submitTodo").addEventListener("click",  submitTodo)
 
 function submitTodo()
 {
@@ -104,26 +99,31 @@ function submitTodo()
             checked: false
         }
 
-        createTodo(newTodo, false);
-        populateTodosFromStorage();
+            //populateTodosFromStorage();
+
+            createTodo(newTodo, false);
     }
 }
 
 function populateTodosFromStorage()
 {
-    clearCurrentTodos();
+
+        clearCurrentTodos();
+
+
     let keys = Object.keys(localStorage).sort()
     keys.forEach(currentKey =>
     {
         if(localStorage.getItem(currentKey) !== null)
         {
-            createTodo(JSON.parse(localStorage.getItem(currentKey)), true);
+                createTodo(JSON.parse(localStorage.getItem(currentKey)), true);
         }
     })
 
-    console.clear()
-    keys.forEach(key => {
-        console.log(JSON.parse(localStorage.getItem(key)));
+    //console.clear()
+    keys.forEach(key =>
+    {
+        //console.log(JSON.parse(localStorage.getItem(key)));
     })
     sizeCheck()
 }
@@ -134,15 +134,122 @@ function createTodo(newTodo, fromStorage)
 
     if(!fromStorage)
     {
+        newTodoAsMarkup.style.transition = "all ease 0.75s";
+        newTodoAsMarkup.childNodes[1].childNodes[0].style.transition = "all ease 0.75s";
+        newTodoAsMarkup.childNodes[1].childNodes[0].style.fontSize = "2rem";
+
+        newTodoAsMarkup.childNodes[2].childNodes[0].childNodes[0].style.transition = "all ease 0.75s";
+        newTodoAsMarkup.childNodes[2].childNodes[1].childNodes[0].style.transition = "all ease 0.75s";
+
+
+        newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 50 + '%';
+        newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 50 + '%';
+
+
+
+
+
+        let heightOfThisTodo = newTodoAsMarkup.childNodes[1].childNodes[0].scrollHeight;
+        newTodoAsMarkup.childNodes[1].style.padding = 25 + 'px'
+        console.log(heightOfThisTodo)
+
+        setTimeout(()=>
+        {
+
+            newTodoAsMarkup.childNodes[2].childNodes[0].childNodes[0].style.height = 'clamp(50px, 5vh, 150px)';
+            newTodoAsMarkup.childNodes[2].childNodes[1].childNodes[0].style.height = 'clamp(50px, 5vh, 150px)';
+            newTodoAsMarkup.style.minHeight = 200 + 'px';
+            newTodoAsMarkup.style.height = (heightOfThisTodo + 100) + 'px';
+            newTodoAsMarkup.style.maxHeight = (heightOfThisTodo + 100) + 'px';
+
+
+
+
+        },10)
+
         document.getElementById("addTodoInput").value = "";
+
+
+
+
     }
+    if(fromStorage)
+    {
+
+        newTodoAsMarkup.style.transition = "none"
+        newTodoAsMarkup.childNodes[1].childNodes[0].style.transition = "none"
+        newTodoAsMarkup.childNodes[1].childNodes[0].style.fontSize = "2rem";
+
+        //The position of this line affects the size of the item upon ctrl f5 vs f5
+
+
+
+        setTimeout(()=>
+        {
+            function mobileCheck(eventListener)
+            {
+                let heightOfThisTodo = newTodoAsMarkup.childNodes[1].childNodes[0].scrollHeight;
+                if(eventListener.matches)
+                {
+                    newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 100 + 'px';
+                    newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 100 + 'px';
+                    newTodoAsMarkup.style.minHeight = 350 + 'px';
+                    newTodoAsMarkup.style.height = (heightOfThisTodo + 250) + 'px';
+                    newTodoAsMarkup.style.maxHeight = (heightOfThisTodo + 250) + 'px';
+                    newTodoAsMarkup.style.justifyContent = "space-between"
+                    console.log("i'm small")
+                }
+                else
+                {
+
+
+                    newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 50 + '%';
+                    newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 50 + '%';
+
+                    newTodoAsMarkup.childNodes[2].childNodes[0].childNodes[0].style.height = 'clamp(50px, 5vh, 150px)';
+                    newTodoAsMarkup.childNodes[2].childNodes[1].childNodes[0].style.height = 'clamp(50px, 5vh, 150px)';
+                    newTodoAsMarkup.style.justifyContent = ""
+                    newTodoAsMarkup.style.minHeight = 200 + "px";
+                    newTodoAsMarkup.style.height = heightOfThisTodo + 100 + "px";
+                    newTodoAsMarkup.style.maxHeight = heightOfThisTodo + 100 + "px";
+                    newTodoAsMarkup.childNodes[1].style.padding = 25 + 'px'
+                }
+            }
+
+            let eventListener = window.matchMedia("(max-width: 600px)")
+            mobileCheck(eventListener) // Call listener function at run time
+            eventListener.addListener(mobileCheck) // Attach listener function on state changes
+
+
+
+
+
+
+        },10)
+
+
+
+    }
+
 
     createTodoEventListeners(newTodoAsMarkup, newTodo)
 
     if(!fromStorage)
     {
         addTodoToStorage(JSON.stringify(newTodo));
+
+        document.getElementById("submitTodo").removeEventListener("click",  submitTodo);
+        document.removeEventListener("keydown",  enterKeyCheck);
+
+        setTimeout(()=>
+        {
+            document.getElementById("submitTodo").addEventListener("click",  submitTodo)
+            document.addEventListener("keydown",  enterKeyCheck)
+        }, 750)
+
+
     }
+
 }
 
 function getTextFromAddBox()
@@ -161,6 +268,7 @@ function createTodoMarkup(todoObject)
     const newTodoItem = document.createElement("div");
     const newChecked = document.createElement("div");
     const newTodoText = document.createElement("li");
+    const newTextPTag = document.createElement("p");
     const newButtonContainer = document.createElement("div");
     const newEditButton = document.createElement("button");
     const newDeleteButton = document.createElement("button");
@@ -168,21 +276,18 @@ function createTodoMarkup(todoObject)
     const newEditButtonImg = document.createElement("img");
     const newDeleteButtonImg = document.createElement("img");
 
-
-
-
-
-
-
     newChecked.classList.add("checked");
     newTodoItem.classList.add("todoItem")
 
     document.getElementById("listOfTodos").append(newTodoItem);
 
+
     newTodoText.classList.add("todoText")
-    newTodoText.innerText = todoObject.text;
+    newTextPTag.innerText = todoObject.text;
+
     newTodoItem.append(newChecked);
     newTodoItem.append(newTodoText);
+    newTodoText.append(newTextPTag)
 
     newButtonContainer.classList.add("buttonContainer")
     newTodoItem.append(newButtonContainer);
@@ -202,6 +307,7 @@ function createTodoMarkup(todoObject)
     newEditButton.append(newEditButtonImg);
     newDeleteButton.append(newDeleteButtonImg);
 
+
     if(todoObject.checked === true)
     {
         newChecked.style.opacity = "1";
@@ -218,14 +324,13 @@ function createTodoMarkup(todoObject)
 function createTodoEventListeners(newTodoItem, todoObject)
 {
 
-
-
     let newTodoChecked = newTodoItem.childNodes[0];
     let newTodoText = newTodoItem.childNodes[1];
     let newEditButton = newTodoItem.childNodes[2].childNodes[0];
     let newDeleteButton = newTodoItem.childNodes[2].childNodes[1];
 
-    newTodoText.addEventListener('click', () => {
+    newTodoText.addEventListener('click', () =>
+    {
         toggleChecked(newTodoItem, todoObject);
     })
 
@@ -281,15 +386,52 @@ function createTodoEventListeners(newTodoItem, todoObject)
         {
             if(JSON.parse(localStorage.getItem(currentKey)).id === todoObject.id)
             {
-                localStorage.removeItem(todoObject.id);
+                newTodoItem.style.transition = "all ease-in-out 1s"
+                newTodoItem.childNodes[2].childNodes[0].childNodes[0].style.transition = "all ease-in-out 1s";
+                newTodoItem.childNodes[2].childNodes[1].childNodes[0].style.transition = "all ease-in-out 1s";
+
+
+
+                newTodoItem.childNodes[1].style.transition = "all ease-in-out 1s"
+
+                newTodoItem.childNodes[1].childNodes[0].style.transition = "all ease-in-out 1s"
+                newTodoItem.childNodes[2].childNodes[0].classList.remove("inEdit")
+                setTimeout(()=> {
+                    newTodoItem.style.height = 0 + 'px';
+                    newTodoItem.style.minHeight = '0' + 'px';
+                    newTodoItem.style.maxHeight = 0 + 'px';
+                    newTodoItem.childNodes[2].childNodes[0].childNodes[0].style.height = '0px';
+                    newTodoItem.childNodes[2].childNodes[1].childNodes[0].style.height = '0px';
+
+
+                    newTodoItem.childNodes[1].style.paddingTop = 0 + 'px'
+                    newTodoItem.childNodes[1].style.paddingBottom = 0 + 'px'
+                },10)
+
+
+                //newTodoItem.childNodes[1].childNodes[0].style.fontSize = "0px";
+
+                setTimeout(()=>{
+                    newTodoItem.style.marginBottom = 0 + 'px';
+                },1000)
+
+                    localStorage.removeItem(todoObject.id);
+
             }
         })
-        populateTodosFromStorage()
+
+
+
+                //populateTodosFromStorage()
+
+        showAddScreen()
+
+
+
     }
 
     function editItem(newTodoItem, todoObject, skip)
     {
-        console.log(todoObject)
         let currentlyExistingTodos = document.querySelectorAll(".todoItem")
 
         currentlyExistingTodos.forEach(currentTodo => {
@@ -316,7 +458,7 @@ function createTodoEventListeners(newTodoItem, todoObject)
                         {
                             editEventListener()
                         }
-                    };
+                    }
 
                     function editEventListener()
                     {
@@ -325,11 +467,35 @@ function createTodoEventListeners(newTodoItem, todoObject)
 
                         if(currentTodo.childNodes[2].childNodes[0].classList.contains("inEdit") && document.getElementById("editTodoInput").value.trim() !== "")
                         {
+                            currentTodo.childNodes[2].childNodes[0].classList.remove("inEdit")
                             todoObject.text = document.getElementById("editTodoInput").value;
+
+
+
+                            newTodoItem.childNodes[1].childNodes[0].innerText = document.getElementById("editTodoInput").value;
+
+
+                            newTodoItem.style.transition = "all ease 0.75s";
+                            newTodoItem.childNodes[1].childNodes[0].style.transition = "all ease 0.75s";
+
+                            newTodoItem.childNodes[2].childNodes[0].childNodes[0].style.transition = "all ease 0.75s";
+                            newTodoItem.childNodes[2].childNodes[1].childNodes[0].style.transition = "all ease 0.75s";
+
+                            let heightOfThisTodo = newTodoItem.childNodes[1].childNodes[0].scrollHeight;
+
+                            setTimeout(()=>
+                            {
+                                newTodoItem.style.minHeight = 200 + 'px';
+                                newTodoItem.style.height = (heightOfThisTodo + 100) + 'px';
+                                newTodoItem.style.maxHeight = (heightOfThisTodo + 100) + 'px';
+
+                            },10)
+
+
                             localStorage.setItem(todoObject.id, JSON.stringify(todoObject))
 
                             showAddScreen();
-                            populateTodosFromStorage()
+                            //populateTodosFromStorage()
                         }
                     }
                 }
@@ -345,6 +511,7 @@ function createTodoEventListeners(newTodoItem, todoObject)
 
 function clearCurrentTodos()
 {
+
     let items = document.querySelectorAll(".todoItem");
 
     for(let i = 0; i < items.length; i++)

@@ -103,7 +103,7 @@ body {
   justify-content: center;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1400px) {
   #todoContainer {
     width: 90%;
   }
@@ -135,6 +135,8 @@ body {
     background-color: #B7B7A4;
   }
 }
+
+
 #wrapper {
   width: 100%;
   height: 100%;
@@ -152,29 +154,35 @@ body {
 .todoItem {
   background-color: #DDBEA9;
   width: 100%;
-  min-height: 20vh;
+  min-height: 0;
+  height: 0px;
+  max-height: 0px;
+  min-height: 0px;
+  overflow: hidden;
   display: flex;
   margin-bottom: 50px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   box-shadow: 0 0 20px -5px;
-  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: top;
+
 }
+
+
 
 .todoText {
   width: 80%;
-  font-size: clamp(4vh, 2rem, 2rem);
+  font-size: 0;
   font-family: poppins-Light;
   overflow-wrap: anywhere;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px;
 }
 
 .todoButton {
   width: 100%;
-  height: 50%;
+  height: 0;
   outline: none;
   border: none;
   background-color: white;
@@ -189,15 +197,11 @@ body {
 .editTodo {
   border-top-right-radius: 50px;
   width: 100%;
-  height: 100%;
-  min-height: 75px;
 }
 
 .deleteTodo {
   border-bottom-right-radius: 50px;
   width: 100%;
-  height: 100%;
-  min-height: 75px;
 }
 
 .editTodo:active svg, .deleteTodo:active svg {
@@ -213,7 +217,7 @@ body {
 }
 
 .editIcon, .deleteIcon {
-  height: 50px;
+  height: 0;
 }
 
 .checked {
@@ -252,6 +256,11 @@ body {
 
   .editTodo {
     border-top-right-radius: 0;
+  }
+
+  .todoButton
+  {
+    height: 100px;
   }
 
   .editIcon, .deleteIcon {
