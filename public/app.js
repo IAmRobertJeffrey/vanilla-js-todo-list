@@ -15,12 +15,28 @@ function sizeCheck()
             {
                 currentTodo.childNodes[0].style.height = "0px";
             }
-            currentTodo.style.minHeight = 400 + 'px';
-            currentTodo.style.height = (currentTodo.childNodes[1].childNodes[0].scrollHeight + 300) + 'px';
-            currentTodo.style.maxHeight = (currentTodo.childNodes[1].childNodes[0].scrollHeight + 300) + 'px';
+            setTimeout(()=>
+            {
+                currentTodo.style.minHeight = 400 + 'px';
+                currentTodo.style.height = (currentTodo.childNodes[1].childNodes[0].scrollHeight + 300) + 'px';
+                currentTodo.style.maxHeight = (currentTodo.childNodes[1].childNodes[0].scrollHeight + 300) + 'px';
+                currentTodo.childNodes[2].style.height = "200px"
+            },10)
+
+
         }
         else
         {
+            setTimeout(()=>
+            {
+                console.log(currentTodo.childNodes[1].childNodes[0].scrollHeight)
+                currentTodo.style.minHeight = "200px";
+                currentTodo.style.maxHeight = 200 + parseInt(currentTodo.childNodes[1].childNodes[0].scrollHeight);
+                currentTodo.style.height = 200 + parseInt(currentTodo.childNodes[1].childNodes[0].scrollHeight);
+            },10)
+
+
+
             currentTodo.classList.remove("smallScreen")
             currentTodo.childNodes[0].style.height = "auto";
             currentTodo.childNodes[0].style.minHeight = "";
@@ -98,14 +114,66 @@ function populateTodosFromStorage()
     })
     sizeCheck()
 }
+let eventListener = window.matchMedia("(max-width: 600px)")
+mobileCheck(eventListener) // Call listener function at run time
+eventListener.addListener(mobileCheck) // Attach listener function on state changes
+
+function mobileCheck(eventListener)
+{
+    if(eventListener.matches)
+    {
+        console.log(eventListener.matches + "small")
+        let todos = document.querySelectorAll(".todoItem")
+        todos.forEach(currentTodo =>
+        {
+
+            let heightOfThisTodo = currentTodo.childNodes[1].childNodes[0].scrollHeight
+
+            currentTodo.childNodes[2].style.height = "100px"
+            currentTodo.childNodes[2].childNodes[0].style.height = "50%"
+            currentTodo.childNodes[2].childNodes[1].style.height = "50%"
+
+            setTimeout(()=>{
+                currentTodo.style.minHeight = 400 + 'px';
+                currentTodo.style.height = (heightOfThisTodo + 250) + 'px';
+                currentTodo.style.maxHeight = (heightOfThisTodo + 250) + 'px';
+            }, 10)
+
+        })
+    }
+    else
+    {
+        console.log(eventListener.matches + "big")
+        let todos = document.querySelectorAll(".todoItem")
+
+        todos.forEach(currentTodo =>
+        {
+            currentTodo.childNodes[2].style.height = "100%"
+            currentTodo.childNodes[2].childNodes[0].style.height = "50%"
+            currentTodo.childNodes[2].childNodes[1].style.height = "50%"
+            console.log(currentTodo.childNodes[1].childNodes[0].scrollHeight)
+
+            setTimeout(()=>{
+                currentTodo.style.minHeight = "200px";
+                currentTodo.style.maxHeight = currentTodo.childNodes[1].childNodes[0].scrollHeight;
+                currentTodo.style.height = currentTodo.childNodes[1].childNodes[0].scrollHeight;
+            },10)
+
+
+
+
+        })
+
+    }
+}
 
 function createTodo(newTodo, fromStorage)
 {
     let newTodoAsMarkup = createTodoMarkup(newTodo);
 
-
     if(!fromStorage)
     {
+
         newTodoAsMarkup.childNodes[0].style.height = "";
         newTodoAsMarkup.style.transition = "height ease 0.75s, min-height ease 0.75s, max-height ease 0.75s";
         newTodoAsMarkup.childNodes[1].childNodes[0].style.transition = "all none";
@@ -128,12 +196,17 @@ function createTodo(newTodo, fromStorage)
 
         newTodoAsMarkup.classList.add(newTodo.id)
 
-        function mobileCheck(eventListener)
-        {
-            if (newTodoAsMarkup.classList.contains("smallScreen"))
+            if (eventListener.matches)
             {
+
                 newTodoAsMarkup.childNodes[0].style.transition = "none"
                 newTodoAsMarkup.childNodes[0].style.height = "0px"
+
+                newTodoAsMarkup.childNodes[2].style.height = 200 + 'px';
+                newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 100 + 'px';
+                newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 100 + 'px';
+                newTodoAsMarkup.childNodes[2].style.height = 200 + "px"
+
 
                 newTodoAsMarkup.childNodes[0].style.transition = "none"
                 if(newTodoAsMarkup.childNodes[1].style.textDecorationLine === "line-through")
@@ -145,15 +218,12 @@ function createTodo(newTodo, fromStorage)
 
                 }
 
-                newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 100 + 'px';
-                newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 100 + 'px';
-
-                newTodoAsMarkup.style.minHeight = 400 + 'px';
+                newTodoAsMarkup.style.minHeight = 100 + 'px';
                 newTodoAsMarkup.style.height = (heightOfThisTodo + 250) + 'px';
                 newTodoAsMarkup.style.maxHeight = (heightOfThisTodo + 250) + 'px';
 
                 newTodoAsMarkup.style.justifyContent = "space-between"
-
+                sizeCheck()
                 setTimeout(()=>
                 {
                     newTodoAsMarkup.childNodes[0].style.transition = "none"
@@ -161,6 +231,7 @@ function createTodo(newTodo, fromStorage)
             }
             else
             {
+                sizeCheck()
                 newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 50% + 'px';
                 newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 50% + 'px';
                 newTodoAsMarkup.style.minHeight = 200 + 'px';
@@ -170,10 +241,6 @@ function createTodo(newTodo, fromStorage)
 
                 newTodoAsMarkup.childNodes[0].style.height = "auto";
             }
-        }
-        let eventListener = window.matchMedia("(max-width: 600px)")
-        mobileCheck(eventListener) // Call listener function at run time
-        eventListener.addListener(mobileCheck) // Attach listener function on state changes
 
         document.getElementById("addTodoInput").value = "";
 
@@ -195,7 +262,7 @@ function createTodo(newTodo, fromStorage)
             function mobileCheck(eventListener)
             {
                 let heightOfThisTodo = newTodoAsMarkup.childNodes[1].childNodes[0].scrollHeight;
-                if(newTodoAsMarkup.classList.contains("smallScreen"))
+                if(eventListener.matches)
                 {
                     newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 100 + 'px';
                     newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 100 + 'px';
@@ -227,7 +294,7 @@ function createTodo(newTodo, fromStorage)
     }
 
     createTodoEventListeners(newTodoAsMarkup, newTodo)
-
+    sizeCheck()
     if(!fromStorage)
     {
         addTodoToStorage(JSON.stringify(newTodo));
@@ -514,6 +581,7 @@ function createTodoEventListeners(newTodoItem, todoObject, markupID)
                                 }
                                 else
                                 {
+
                                     newTodoItem.style.minHeight = 200 + 'px';
                                     newTodoItem.style.height = (heightOfThisTodo + 100) + 'px';
                                     newTodoItem.style.maxHeight = (heightOfThisTodo + 100) + 'px';
