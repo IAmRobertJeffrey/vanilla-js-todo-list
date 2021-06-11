@@ -1,21 +1,22 @@
 @import "./colors.scss";
 
-@font-face {
+@font-face
+{
     font-family: poppins-light;
     src: url(./fonts/Poppins-Light.ttf);
-  }
+}
 
-  @font-face {
+@font-face
+{
     font-family: poppins-thin;
     src: url(./fonts/Poppins-Medium.ttf);
-  }
+}
 
-
-*{
+*
+{
     margin:0;
     padding: 0;
     box-sizing: border-box;
-
 }
 
 body
@@ -29,7 +30,6 @@ body
     height:10vh;
     min-height: 100px;
     background-color: $ebony;
-        
 }
 
 #header
@@ -53,7 +53,6 @@ body
     
 }
 
-
 #editTodoInput
 {
     display: none;
@@ -65,7 +64,8 @@ body
     width: 80%;
 }
 
-#addTodoInput::placeholder, #editTodoInput::placeholder {
+#addTodoInput::placeholder, #editTodoInput::placeholder
+{
     font-size: clamp(1.5rem, 1.5vw, 3rem);
     text-align: center;
     opacity: 0.5;
@@ -79,11 +79,7 @@ body
     width:100%;
     height: 100%;
     outline: none;
-    
-   
-
 }
-
 
 #submitTodo, #editTodo
 {
@@ -95,24 +91,15 @@ body
     align-items: center;
     justify-content: center;
     font-size: clamp(20pt, 1.5vw, 3rem);
-    font-family: poppins-thin;
-    border: none;
+    font-family: poppins-thin, serif;
     background-color: #41472f;
     color:$artichoke;
-    border-top: none;
-    border-left: none;
+    border-style: none;
     transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@media only screen and (min-width: 1000px) {
-    #submitTodo:hover, #editTodo:hover {
-        color: $ebony;
-        border: 0.1vw solid #41472f;
-        background-color: $ashGray;
-    }
-
-}
-#submitTodo:active, #editTodo:active {
+#submitTodo:active, #editTodo:active
+{
     color:#41472f;
 }
 
@@ -128,8 +115,124 @@ body
     justify-content: center;
 }
 
-@media only screen and (max-width: 1000px) {
-    #todoContainer {
+#wrapper
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#listOfTodos
+{
+    width: 100%;
+    margin-top: 100px;
+    list-style: none;
+}
+
+.todoItem
+{
+    background-color: $desertSand;
+    width: 100%;
+    min-height: 0;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 0 20px -5px;
+    transform-origin: top;
+
+}
+
+.todoText
+{
+    width: 80%;
+    font-size: 0;
+    font-family: poppins-Light, serif;
+    overflow-wrap: anywhere;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.todoButton
+{
+    width: 100%;
+    height: 0;
+    outline: none;
+    border:none;
+    background-color: white;
+}
+
+.buttonContainer
+{
+    display: flex;
+    width: 20%;
+    flex-direction: column;
+}
+
+.editTodo
+{
+    border-top-right-radius: 50px;
+    width: 100%;
+}
+
+.deleteTodo
+{
+    border-bottom-right-radius: 50px;
+    width: 100%;
+}
+
+:not(.inEdit).editTodo:hover, .deleteTodo:hover
+{
+    background-color: $ashGray !important;
+}
+
+.editIcon, .deleteIcon
+{
+    height: 0;
+}
+
+.checked
+{
+    -webkit-transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out;
+    width: 25px;
+    background-color: $ebony;
+    opacity: 0;
+}
+
+.editClicked, .editClicked:hover
+{
+    background-color: $ebony;
+}
+
+.inEdit
+{
+    .editTodo:hover
+    {
+        background-color: $ebony !important;
+    }
+    background-color: $ebony !important;
+}
+
+@media only screen and (max-width: 1300px)
+{
+    #submitTodo:hover, #editTodo:hover
+    {
+        color: $ebony;
+        border: 0.1vw solid #41472f;
+        background-color: $ashGray;
+    }
+
+    #todoContainer
+    {
         width: 90%;
     }
     #container
@@ -165,157 +268,22 @@ body
         background-color: $ashGray;
     }
 }
-
-
-
-#wrapper
+.hoverClass:hover
 {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: #A5A58D !important;
 }
-
-
-
-
-#listOfTodos
+.hoverClass
 {
-    width: 100%;
-    margin-top: 100px;
-    list-style: none;
-}
-
-.todoItem
-{
-    background-color: $desertSand;
-    width: 100%;
-
-    min-height: 0;
-    height: 0px;
-    max-height: 0px;
-    overflow: hidden;
-    display: flex;
-    margin-bottom: 50px;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    box-shadow: 0 0 20px -5px;
-    //transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform-origin: top;
-
-}
-
-.todoText
-{
-    
-    width: 80%;
-    font-size: 0;
-    font-family: poppins-Light;
-    overflow-wrap: anywhere;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px;
-}
-
-.todoButton
-{
-    width: 100%;
-    height: 0;
-    outline: none;
-    border:none;
     background-color: white;
-
-}
-
-.buttonContainer
-{
-    display: flex;
-    width: 20%;
-    flex-direction: column;
-   
-}
-
-.editTodo
-{
-    border-top-right-radius: 50px;
-    width: 100%;
-
-
-    
-}
-
-.deleteTodo
-{
-    border-bottom-right-radius: 50px;
-    width: 100%;
-
-
-   
-}
-
-.editTodo:active, .deleteTodo:active
-{
-    svg{
-        fill: red;
-    }
-}
-
-:not(.inEdit).editTodo:hover
-{
-    background-color: $ashGray;
-
-}
-
-.deleteTodo:hover
-{
-    background-color: $ashGray;
-}
-
-.editIcon, .deleteIcon
-{
-    height: 0;
-}
-
-
-
-.checked
-{
-    -webkit-transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out;
-    -moz-transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out;
-    transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out;
-    width: 25px;
-    background-color: $ebony;
-    opacity: 0;
-}
-
-.editClicked, .editClicked:hover
-{
-    background-color: $ebony;
-}
-
-.inEdit
-{
-    .editTodo:hover
-    {
-        background-color: $ebony;
-    }
-    background-color: $ebony;
-}
-
-div.smallScreen > div:first-child
-{
-
 }
 
 @media only screen and (max-width: 600px) {
 
-
     .todoItem
     {
         flex-direction: column;
-        border-top-right-radius: 0px;
+        transition: none;
+        border-top-right-radius: 0;
     }
 
     .buttonContainer
@@ -326,6 +294,7 @@ div.smallScreen > div:first-child
     .todoText
     {
         width: 100%;
+        transition: none;
     }
 
     .editTodo

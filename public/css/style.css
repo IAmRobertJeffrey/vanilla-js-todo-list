@@ -73,22 +73,13 @@ body {
   align-items: center;
   justify-content: center;
   font-size: clamp(20pt, 1.5vw, 3rem);
-  font-family: poppins-thin;
-  border: none;
+  font-family: poppins-thin, serif;
   background-color: #41472f;
   color: #A5A58D;
-  border-top: none;
-  border-left: none;
+  border-style: none;
   transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@media only screen and (min-width: 1000px) {
-  #submitTodo:hover, #editTodo:hover {
-    color: #6B705C;
-    border: 0.1vw solid #41472f;
-    background-color: #B7B7A4;
-  }
-}
 #submitTodo:active, #editTodo:active {
   color: #41472f;
 }
@@ -103,38 +94,6 @@ body {
   justify-content: center;
 }
 
-@media only screen and (max-width: 1000px) {
-  #todoContainer {
-    width: 90%;
-  }
-
-  #container {
-    height: 20vh;
-    min-height: 100px;
-  }
-
-  #addTodoInput, #editTodoInput {
-    border-radius: 0;
-    width: 100%;
-    height: 75%;
-    border: 0;
-  }
-
-  #submitTodo, #editTodo {
-    height: 40%;
-    width: 100%;
-    border-radius: 0;
-  }
-
-  #addTodoForm {
-    flex-direction: column;
-  }
-
-  #submitTodo:active, #editTodo:active {
-    color: #6B705C;
-    background-color: #B7B7A4;
-  }
-}
 #wrapper {
   width: 100%;
   height: 100%;
@@ -153,8 +112,8 @@ body {
   background-color: #DDBEA9;
   width: 100%;
   min-height: 0;
-  height: 0px;
-  max-height: 0px;
+  height: 0;
+  max-height: 0;
   overflow: hidden;
   display: flex;
   margin-bottom: 50px;
@@ -167,7 +126,7 @@ body {
 .todoText {
   width: 80%;
   font-size: 0;
-  font-family: poppins-Light;
+  font-family: poppins-Light, serif;
   overflow-wrap: anywhere;
   display: flex;
   justify-content: center;
@@ -199,16 +158,8 @@ body {
   width: 100%;
 }
 
-.editTodo:active svg, .deleteTodo:active svg {
-  fill: red;
-}
-
-:not(.inEdit).editTodo:hover {
-  background-color: #B7B7A4;
-}
-
-.deleteTodo:hover {
-  background-color: #B7B7A4;
+:not(.inEdit).editTodo:hover, .deleteTodo:hover {
+  background-color: #B7B7A4 !important;
 }
 
 .editIcon, .deleteIcon {
@@ -229,16 +180,63 @@ body {
 }
 
 .inEdit {
-  background-color: #6B705C;
+  background-color: #6B705C !important;
 }
 .inEdit .editTodo:hover {
-  background-color: #6B705C;
+  background-color: #6B705C !important;
+}
+
+@media only screen and (max-width: 1300px) {
+  #submitTodo:hover, #editTodo:hover {
+    color: #6B705C;
+    border: 0.1vw solid #41472f;
+    background-color: #B7B7A4;
+  }
+
+  #todoContainer {
+    width: 90%;
+  }
+
+  #container {
+    height: 20vh;
+    min-height: 100px;
+  }
+
+  #addTodoInput, #editTodoInput {
+    border-radius: 0;
+    width: 100%;
+    height: 75%;
+    border: 0;
+  }
+
+  #submitTodo, #editTodo {
+    height: 40%;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  #addTodoForm {
+    flex-direction: column;
+  }
+
+  #submitTodo:active, #editTodo:active {
+    color: #6B705C;
+    background-color: #B7B7A4;
+  }
+}
+.hoverClass:hover {
+  background-color: #A5A58D !important;
+}
+
+.hoverClass {
+  background-color: white;
 }
 
 @media only screen and (max-width: 600px) {
   .todoItem {
     flex-direction: column;
-    border-top-right-radius: 0px;
+    transition: none;
+    border-top-right-radius: 0;
   }
 
   .buttonContainer {
@@ -247,6 +245,7 @@ body {
 
   .todoText {
     width: 100%;
+    transition: none;
   }
 
   .editTodo {
