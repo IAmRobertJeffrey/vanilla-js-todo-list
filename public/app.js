@@ -161,8 +161,8 @@ function createTodo(newTodo, fromStorage)
             }
             else
             {
-                newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 100 + 'px';
-                newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 100 + 'px';
+                newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 50% + 'px';
+                newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 50% + 'px';
                 newTodoAsMarkup.style.minHeight = 200 + 'px';
                 newTodoAsMarkup.style.height = (heightOfThisTodo + 100) + 'px';
                 newTodoAsMarkup.style.maxHeight = (heightOfThisTodo + 100) + 'px';
