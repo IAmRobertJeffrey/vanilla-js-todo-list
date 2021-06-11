@@ -10,7 +10,6 @@ firebase-debug.*.log*
 # Firebase cache
 .firebase/
 /public/
-firebase.json
 .firebaserc
 
 /.idea
