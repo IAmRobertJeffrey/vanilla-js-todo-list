@@ -20,7 +20,6 @@ function sizeCheck()
             currentTodo.classList.remove("smallScreen")
             currentTodo.childNodes[0].style.height = "";
         }
-
     })
 }
     let query = window.matchMedia('(max-width: 600px)')
@@ -141,13 +140,8 @@ function createTodo(newTodo, fromStorage)
         newTodoAsMarkup.childNodes[2].childNodes[0].childNodes[0].style.transition = "all ease 0.75s";
         newTodoAsMarkup.childNodes[2].childNodes[1].childNodes[0].style.transition = "all ease 0.75s";
 
-
         newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 50 + '%';
         newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 50 + '%';
-
-
-
-
 
         let heightOfThisTodo = newTodoAsMarkup.childNodes[1].childNodes[0].scrollHeight;
         newTodoAsMarkup.childNodes[1].style.padding = 25 + 'px'
@@ -155,23 +149,13 @@ function createTodo(newTodo, fromStorage)
 
         setTimeout(()=>
         {
-
             newTodoAsMarkup.childNodes[2].childNodes[0].childNodes[0].style.height = 'clamp(50px, 5vh, 150px)';
             newTodoAsMarkup.childNodes[2].childNodes[1].childNodes[0].style.height = 'clamp(50px, 5vh, 150px)';
             newTodoAsMarkup.style.minHeight = 200 + 'px';
             newTodoAsMarkup.style.height = (heightOfThisTodo + 100) + 'px';
             newTodoAsMarkup.style.maxHeight = (heightOfThisTodo + 100) + 'px';
-
-
-
-
         },10)
-
         document.getElementById("addTodoInput").value = "";
-
-
-
-
     }
     if(fromStorage)
     {
@@ -179,10 +163,6 @@ function createTodo(newTodo, fromStorage)
         newTodoAsMarkup.style.transition = "none"
         newTodoAsMarkup.childNodes[1].childNodes[0].style.transition = "none"
         newTodoAsMarkup.childNodes[1].childNodes[0].style.fontSize = "2rem";
-
-        //The position of this line affects the size of the item upon ctrl f5 vs f5
-
-
 
         setTimeout(()=>
         {
@@ -201,8 +181,6 @@ function createTodo(newTodo, fromStorage)
                 }
                 else
                 {
-
-
                     newTodoAsMarkup.childNodes[2].childNodes[0].style.height = 50 + '%';
                     newTodoAsMarkup.childNodes[2].childNodes[1].style.height = 50 + '%';
 
@@ -215,22 +193,11 @@ function createTodo(newTodo, fromStorage)
                     newTodoAsMarkup.childNodes[1].style.padding = 25 + 'px'
                 }
             }
-
             let eventListener = window.matchMedia("(max-width: 600px)")
             mobileCheck(eventListener) // Call listener function at run time
             eventListener.addListener(mobileCheck) // Attach listener function on state changes
-
-
-
-
-
-
         },100)
-
-
-
     }
-
 
     createTodoEventListeners(newTodoAsMarkup, newTodo)
 
@@ -246,10 +213,7 @@ function createTodo(newTodo, fromStorage)
             document.getElementById("submitTodo").addEventListener("click",  submitTodo)
             document.addEventListener("keydown",  enterKeyCheck)
         }, 750)
-
-
     }
-
 }
 
 function getTextFromAddBox()
